@@ -1,0 +1,31 @@
+
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway9527
+  cloud:
+    gateway:
+      routes:
+        - id: payment_routh
+          uri: http://localhost:8001/
+          predicates:
+          - Path=/payment/hystrix/ok/**
+
+        - id: payment_routh2
+          uri: http://localhost:8001
+          predicates:
+          - Path=/payment/hystrix/timeout/**
+
+        - id: news_route001
+          uri: https://www.bilibili.com/
+          predicates:
+          - Path=/news/b
+
+eureka:
+  client:
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
